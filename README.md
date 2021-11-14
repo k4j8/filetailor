@@ -10,16 +10,16 @@ During the backup and restore process, filetailor can modify the file contents a
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [filetailor](#filetailor)
-  - [Example Usage](#example-usage)
-  - [Getting Started](#getting-started)
-    - [Installation](#installation)
-    - [Configuration](#configuration)
-    - [Usage](#usage)
-  - [Line-Specific Control](#line-specific-control)
-      - [Example: single-line control](#example-single-line-control)
-  - [Diff tool](#diff-tool)
-  - [Contributing](#contributing)
+- [Example Usage](#example-usage)
+- [Getting Started](#getting-started)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+  - [Usage](#usage)
+- [Line-Specific Control](#line-specific-control)
+    - [Example: single-line control](#example-single-line-control)
+- [Diff Tool](#diff-tool)
+- [More Help](#more-help)
+- [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
