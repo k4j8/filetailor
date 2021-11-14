@@ -6,7 +6,7 @@ YAML. Calls other core functions to modify files and YAML.
 import argparse
 import logging
 import os
-import subprocess
+import platform
 import sys
 from pathlib import Path
 import pkg_resources
@@ -27,7 +27,7 @@ __version__ = pkg_resources.require('filetailor')[0].version
 def get_hostname():
     """Returns the hostname of the machine"""
 
-    return subprocess.check_output(['hostname']).decode('utf-8').strip()
+    return platform.node()
 
 
 def get_device_id(yaml_devices, device):
