@@ -1,0 +1,2 @@
+file1.txt contents
+This file is in the local folder.

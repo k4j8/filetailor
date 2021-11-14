@@ -1,0 +1,5 @@
+d device2:
+  hostname: hostname2
+  vars:
+    var1_key: var1_host2_val
+    var2_key: var2_host2_val

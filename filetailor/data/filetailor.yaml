@@ -1,0 +1,34 @@
+---
+# Everything is optional unless otherwise specified
+# If omitted, False by default
+#
+# Read "example_filetailor.yaml" in the same directory as this file for more options
+# See examples at https://github.com/k4j8/filetailor/wiki/Example-YAML-Configurations
+#
+# default:
+#
+#   # Replace VARIABLE_NAME with VARIABLE_VALUE in YAML and file contents
+#   vars:
+#     VARIABLE_NAME: VARIABLE_VALUE
+#
+# device DEVICE_ID:
+#   # Overrides "default" above and can use the exact same options
+#
+# file FILE_ID:
+#   # FILE_ID is what gets saved in the sync_dir and can be different than the
+#   # actual file name
+#
+#   # REQUIRED: PATH includes the file name unless syncing a directory
+#   path:    PATH
+#
+#   # Use include_devices or exclude_devices but not both
+#   include_devices : DEVICE_ID...
+#   exclude_devices : DEVICE_ID...
+#
+#   # If provided, only variables listed here will apply when tailoring the
+#   # file to a device, otherwise all variables apply
+#   vars:
+#   - VARIABLE_NAME
+
+default:
+...

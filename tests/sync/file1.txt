@@ -1,0 +1,20 @@
+file1.txt contents
+
+VAR1_KEY
+var1_key
+
+VAR2_KEY
+var2_key
+
+# This line is for device1 only #{filetailor device1}
+# This line is for device2 only #{filetailor device2}
+
+#{begin filetailor device1}
+# These lines are
+# for device1 only.
+#{end filetailor device1}
+
+#{begin filetailor device2}
+# These lines are
+# for device2 only.
+#{end filetailor device2}

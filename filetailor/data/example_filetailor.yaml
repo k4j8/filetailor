@@ -1,0 +1,91 @@
+---
+# Everything is optional unless otherwise specified
+# If omitted, False by default
+
+# See examples at https://github.com/k4j8/filetailor/wiki/Example-YAML-Configurations
+
+default:
+
+  # Replace VARIABLE_NAME with VARIABLE_VALUE in YAML and file contents
+  vars:
+    VARIABLE_NAME: VARIABLE_VALUE
+
+  # Replace VARIABLE_NAME with VARIABLE_VALUE in YAML
+  yaml_only:
+    VARIABLE_NAME: VARIABLE_VALUE
+
+  # Replace VARIABLE_NAME with VARIABLE_VALUE in file contents
+  file_only:
+    VARIABLE_NAME: VARIABLE_VALUE
+
+  # Default options
+  # These only apply when backing up or restoring a file
+  quiet:   True|False
+  no_diff: True|False
+  no_bak:  True|False
+  yes:     True|False
+  dry_run: True|False
+  sudo:    True|False
+
+  # Save files to STAGING_PATH instead of normal file PATH
+  # Each file is saved in "STAGING_PATH/FILE_ID/filename_with_extension".
+  staging: STAGING_PATH
+
+
+device DEVICE_ID:
+  # Overrides "default" above and can use the exact same options in addition
+  # to the "hostname" option below
+
+  # If DEVICE_ID is not the same as the device's hostname, the hostname can
+  # be specified here
+  hostname: HOSTNAME
+
+
+file FILE_ID:
+  # FILE_ID is what gets saved in the sync_dir and can be different than the
+  # actual file name
+
+  # REQUIRED: PATH includes the full path and the file name
+  path:    PATH
+
+  # If provided, only variables listed here will apply when tailoring the
+  # file to a device, otherwise all variables apply
+  vars:
+  - VARIABLE_NAME
+
+  # File-specific options (overrides default and device)
+  quiet:   True|False
+  no_diff: True|False
+  no_bak:  True|False
+  yes:     True|False
+  dry_run: True|False
+  sudo:    True|False
+
+  # Save files to STAGING_PATH instead of normal file PATH
+  # Each file is saved in "STAGING_PATH/FILE_ID/filename_with_extension".
+  staging: STAGING_PATH
+
+  # If unique = True, device name will be appending to filename and no
+  # tailoring between devices will take place
+  unique: True|False
+
+  # Use include_devices or exclude_devices but not both
+  include_devices : DEVICE_ID...
+  exclude_devices : DEVICE_ID...
+
+  # For directories only
+  # https://docs.python.org/3/library/re.html#re.Pattern.search
+  # For example, to include only ".py" files, REXEG = "\.py"
+  # Subdirectories are automatically excluded
+  include_contents: REGEX
+  exclude_contents: REGEX
+
+  # Executable scripts to run before/after backup/restore
+  # Scripts execute after variables
+  # Backup stripts also execute when checking file status
+  scripts:
+    before_backup : PATH_TO_SCRIPT
+    after_backup  : PATH_TO_SCRIPT
+    before_restore: PATH_TO_SCRIPT
+    after_restore : PATH_TO_SCRIPT
+...
