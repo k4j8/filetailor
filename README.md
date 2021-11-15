@@ -1,6 +1,6 @@
 # filetailor
 
-filetailor is a peer-based configuration management utility for plain-text files (and directories) such as dotfiles. Files are backed up to a specified folder using filetailor, transferred to another device using tools such as [Nextcloud](https://nextcloud.com/) or [Syncthing](https://syncthing.net/), and then restored on other devices using filetailor again.
+filetailor is a peer-based configuration management utility for plain-text files (and directories) such as dotfiles. Files are backed up to a specified folder using filetailor, transferred to another device using tools such as [Nextcloud](https://nextcloud.com/), [Syncthing](https://syncthing.net/), or [Git](https://git-scm.com/), and then restored on other devices using filetailor again.
 
 During the backup and restore process, filetailor can modify the file contents and path for the specific device according to variables and line-specific controls defined in YAML. See [list of features](https://github.com/k4j8/filetailor/wiki/Features).
 
@@ -154,6 +154,11 @@ $ git config --global core.pager delta
 ## More Help
 
 See [FAQ](https://github.com/k4j8/filetailor/wiki/FAQ) in the wiki for more help and examples.
+
+Links:
+- [GitHub](https://github.com/k4j8/filetailor)
+- [PyPI](https://pypi.org/project/filetailor/)
+- [AlternativeTo](https://alternativeto.net/software/filetailor/about/)
 
 ## Contributing
 
