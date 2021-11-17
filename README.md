@@ -54,51 +54,34 @@ alias MYHOME='/home/dev2home/' #{filetailor device2}
 
 ### Installation
 
-filetailor requires Python 3.6+ and pip. Install by running `pip install filetailor`. Setup by running `filetailor init` and following the instructions.
-
-First install with `pip` and then generate the config file, `filetailor.ini`, to define where the synced files and YAML are to be saved.
+filetailor requires Python 3.6+ and pip. Install by running the following commands:
 ```bash
 $ pip install filetailor
 
 $ filetailor init
-Create "/home/username/.config/filetailor/filetailor.ini"? [Y/n] y
-
-Created "/home/username/.config/filetailor/filetailor.ini".
-Update "filetailor.ini" with your desired locations for synced files and configuration YAML, then run "filetailor init" again to create the directories.
+# Update the newly created "filetailor.ini" with your desired locations for synced files and configuration YAML
 
 $ filetailor init
-Reading settings from "filetailor.ini"...
-Creating filetailor directories...
-
-Create "/home/username/.local/share/filetailor/sync" as sync_dir folder? [Y/n] y
-Created "/home/username/.local/share/filetailor/sync".
-
-Create "/home/username/.local/share/filetailor/yaml" as yaml_dir folder? [Y/n] y
-Created "/home/username/.local/share/filetailor/yaml" and default "filetailor.yaml".
-
-Create "/home/username/.cache/filetailor" as staging_dir folder? [Y/n] y
-Created "/home/username/.cache/filetailor".
-
-filetailor initialization complete.
+# Accept confirmations to create directories
 ```
 
 See [Alternative Installs](https://github.com/k4j8/filetailor/wiki/Alternative-Installs) for other installation methods.
 
 ### Configuration
 
-`filetailor.yaml` controls which files sync to which devices.
+`filetailor.yaml` ("the YAML") controls which files sync to which devices.
 
-You can add/remove files to the YAML by running `filetailor add PATHS` and `filetailor remove PATHS`. Alternatively, you can update `filetailor.yaml` manually by following the comments within `filetailor.yaml`.
+You can add/remove files to/from the YAML by running `filetailor add PATHS` and `filetailor remove PATHS` (local paths are okay). Alternatively, you can update the YAML manually by following the comments within.
 
-The YAML also defines variables, which are strings to replace when restoring to a specific device. An example of a variable would be a path to a file that differs between devices. See the [FAQ](https://github.com/k4j8/filetailor/wiki/FAQ) in the wiki for examples.
+The YAML also defines variables, which are strings to replace when restoring to a specific device, such as a path to a file that differs between devices. See the [FAQ](https://github.com/k4j8/filetailor/wiki/FAQ) in the wiki for examples.
 
 ### Usage
 
-To backup files from the local device to the sync folder, run `filetailor backup`.
+To backup all files defined in the YAML from the local device to the sync folder, run `filetailor backup`.
 
-To restore files from the sync folder to the local device, run `filetailor restore`.
+To restore all files defined in the YAML from the sync folder to the local device, run `filetailor restore`.
 
-To list all available arguments, run `filetailor --help` or for command details `filetailor COMMAND --help`.
+To list all available commands, run `filetailor --help` or `filetailor COMMAND --help` for command details.
 
 ## Line-Specific Control
 
@@ -144,7 +127,7 @@ If `diff_tool` is not set, filetailor uses the first defined diff tool in the fo
 - `core.pager` (from Git config, [git-config docs](https://git-scm.com/docs/git-config))
 - `diff`
 
-One popular diff tool is [Delta](https://github.com/dandavison/delta#installation). To install, follow the installation instructions in the link.
+One popular supported diff tool is [Delta](https://github.com/dandavison/delta#installation). To install, follow the installation instructions in the link.
 
 Run the following command to set Delta as your [default pager for Git](https://www.git-scm.com/book/en/v2/Customizing-Git-Git-Configuration) (and thus filetailor):
 ```bash
