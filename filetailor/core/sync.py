@@ -521,7 +521,7 @@ def get_file_status(cfile, cdevice):
 def setup():
     """Get current device with YAML and files to sync
 
-    Called by `status` and `backup_or_restore`
+    Called by `backup_or_restore`
     """
 
     logging.debug('Running setup')
@@ -592,7 +592,7 @@ def run_script(cfile, time, operation):
 def backup_or_restore():
     """Copy files from/to local machine and sync_dir
 
-    Called by `backup` and `restore`
+    Called by `status`, `backup`, and `restore`
     """
 
     (cdevice, files) = setup()
@@ -619,10 +619,10 @@ def backup_or_restore():
 
         # Report issue if missing source
         elif file_status in ['missing source', 'missing both']:
-            if ftconfig.sync in ['status', 'backup']:
+            if ftconfig.sync in ['backup']:
                 cprint.differ(f'Not in local directory: "{cfile.file_id}" does '
                               + f'not exist at "{cfile.source}".')
-            if ftconfig.sync == 'restore':
+            if ftconfig.sync in ['status', 'restore']:
                 cprint.differ(f'Not in sync directory: "{cfile.file_id}" does '
                               + f'not exist at "{cfile.source}".')
 
