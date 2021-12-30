@@ -179,7 +179,7 @@ def copy_file(in_progress, target, xfile, delete):
                 os.remove(target)
             else:
                 shutil.copy2(in_progress, target)
-            if ftconfig.sync == 'restore':
+            if ftconfig.sync == RESTORE:
                 # Apply permissions
                 os.chown(target, xfile.stats[stat.ST_UID],
                          xfile.stats[stat.ST_GID])
@@ -253,7 +253,7 @@ def copy_files(xfile, delete=False):
     if not create_dir(xfile.target_parent, xfile):
         return
 
-    if (ftconfig.sync == 'restore'
+    if (ftconfig.sync == RESTORE
             and not get_option('no_bak', xfile, xfile.device)
             and not get_option('dry_run', xfile, xfile.device)):
         # Create backup
@@ -276,7 +276,7 @@ def copy_subfiles(cfile, subfiles_list, verb):
     """
 
     if subfiles_list and len(subfiles_list):
-        delete = (verb == 'Delete')
+        delete = (verb == DELETE)
         response = okay.get_response(f'\n{verb} files?', 'a')
         if response != 'n':
             if not create_dir(cfile.target, cfile):
@@ -284,7 +284,7 @@ def copy_subfiles(cfile, subfiles_list, verb):
             for file_id in subfiles_list:
                 subfile = SubFile(file_id, cfile)
                 subfile.stats = cfile.stats
-                if verb == 'Update':
+                if verb == UPDATE:
                     diff(subfile.target, subfile.in_progress)
                 if response == 'a':
                     # Copy/delete each file without asking
@@ -423,12 +423,12 @@ def get_file_status(cfile, cdevice):
         if cdevice.device_id not in cfile.yaml_file['include_devices']:
             logging.debug('Skipping %s, host not in included list',
                           cfile.file_id)
-            return 'skip'
+            return SKIP
     elif 'exclude_devices' in cfile.yaml_file:
         if cdevice.device_id in cfile.yaml_file['exclude_devices']:
             logging.debug('Skipping %s, host in excluded list',
                           cfile.file_id)
-            return 'skip'
+            return SKIP
 
     # Define file locations `sync` and `local`
     cfile.sync = Path(os.path.join(ftconfig.paths['sync_dir'], cfile.file_id))
@@ -442,11 +442,11 @@ def get_file_status(cfile, cdevice):
         cfile.local = Path(cfile.yaml_file['path'])
 
     # Define file location `source` and `target`
-    if ftconfig.sync in ['backup']:
+    if ftconfig.sync in [BACKUP]:
         source = cfile.local
         target = cfile.sync
 
-    elif ftconfig.sync in ['status', 'restore']:
+    elif ftconfig.sync in [STATUS, RESTORE]:
         source = cfile.sync
         target = cfile.local
 
@@ -455,14 +455,14 @@ def get_file_status(cfile, cdevice):
     cfile.set_paths(source, target)
 
     # Copy owner and group from `local` (same as `target`)
-    if ftconfig.sync in ['restore']:
+    if ftconfig.sync in [RESTORE]:
 
         if not cfile.target.exists() and not cfile.target_parent.is_dir():
             # Target nor its parent exist, so offer to create parent dir
             cprint.plain('Local file\'s parent folder '
                          + f'"{cfile.target_parent}" does not exist.')
             if not create_dir(cfile.target_parent, cfile):
-                return 'skip'
+                return SKIP
 
         if cfile.target.exists():
             # Target exists
@@ -490,11 +490,11 @@ def get_file_status(cfile, cdevice):
         files_differ = tailor_file(cfile)
         if cfile.target.is_file():
             if files_differ:
-                file_status = 'different'
+                file_status = DIFFERENT
             else:
-                file_status = 'same'
+                file_status = SAME
         else:
-            file_status = 'missing target'
+            file_status = MISSING_TARGET
     elif cfile.source.is_dir():
         # For directories
         if cfile.target.is_file():
@@ -505,15 +505,15 @@ def get_file_status(cfile, cdevice):
         files_differ = diff_dir(cfile)
         if cfile.target.is_dir():
             if files_differ:
-                file_status = 'different'
+                file_status = DIFFERENT
             else:
-                file_status = 'same'
+                file_status = SAME
         else:
-            file_status = 'missing target'
+            file_status = MISSING_TARGET
     elif cfile.target.exists():
-        file_status = 'missing source'
+        file_status = MISSING_SOURCE
     else:
-        file_status = 'missing both'
+        file_status = MISSING_BOTH
 
     return file_status
 
@@ -570,14 +570,14 @@ def run_script(cfile, time, operation):
     """
 
     if time == 'before':
-        if operation in ['sync', 'backup']:
+        if operation in ['sync', BACKUP]:
             script_name = 'before_backup'
-        elif operation == 'restore':
+        elif operation == RESTORE:
             script_name = 'before_restore'
     elif time == 'after':
-        if operation in ['sync', 'backup']:
+        if operation in ['sync', BACKUP]:
             script_name = 'after_backup'
-        elif operation == 'restore':
+        elif operation == RESTORE:
             script_name = 'after_restore'
 
     try:
@@ -605,37 +605,37 @@ def backup_or_restore():
         file_status = get_file_status(cfile, cdevice)
 
         # If running status, report the status
-        if ftconfig.sync == 'status' and file_status == 'same':
+        if ftconfig.sync == STATUS and file_status == SAME:
             cprint.same(f'No change: {cfile.file_id}')
-        elif ftconfig.sync == 'status' and file_status == 'different':
+        elif ftconfig.sync == STATUS and file_status == DIFFERENT:
             cprint.differ(f'Modified: {cfile.file_id}')
-        elif ftconfig.sync == 'status' and file_status == 'missing target':
-            if ftconfig.sync == 'backup':
+        elif ftconfig.sync == STATUS and file_status == MISSING_TARGET:
+            if ftconfig.sync == BACKUP:
                 cprint.differ(f'THIS LINE SHOULD NOT OCCUR - Not in sync directory: "{cfile.file_id}" does '  # TODO
                               + f'not exist at "{cfile.target}".')
-            if ftconfig.sync == 'restore':
+            if ftconfig.sync == RESTORE:
                 cprint.differ(f'Not in local directory: "{cfile.file_id}" does '
                               + f'not exist at "{cfile.target}".')
 
         # Report issue if missing source
-        elif file_status in ['missing source', 'missing both']:
-            if ftconfig.sync in ['backup']:
+        elif file_status in [MISSING_SOURCE, MISSING_BOTH]:
+            if ftconfig.sync in [BACKUP]:
                 cprint.differ(f'Not in local directory: "{cfile.file_id}" does '
                               + f'not exist at "{cfile.source}".')
-            if ftconfig.sync in ['status', 'restore']:
+            if ftconfig.sync in [STATUS, RESTORE]:
                 cprint.differ(f'Not in sync directory: "{cfile.file_id}" does '
                               + f'not exist at "{cfile.source}".')
 
         # If running backup/restore and not missing source, update files
-        elif file_status in ['different', 'missing target']:
+        elif file_status in [DIFFERENT, MISSING_TARGET]:
 
             if cfile.source.is_file():
                 # For files
                 if not get_option('no_diff', cfile, cfile.device):
                     # Print diff or state target doesn't exist
-                    if file_status == 'different':
+                    if file_status == DIFFERENT:
                         diff(cfile.target, cfile.in_progress)
-                    elif file_status == 'missing target':
+                    elif file_status == MISSING_TARGET:
                         cprint.plain(f'For "{cfile.file_id}", '
                                      + f'"{cfile.target}" does not exist.')
                 cprint.plain('')
@@ -658,11 +658,11 @@ def backup_or_restore():
                 if cfile.delete:
                     cprint.plain('\nOld files to delete:')
                     cprint.plain(cfile.delete)
-                copy_subfiles(cfile, cfile.changed, 'Update')
-                copy_subfiles(cfile, cfile.new, 'Add new')
-                copy_subfiles(cfile, cfile.delete, 'Delete')
+                copy_subfiles(cfile, cfile.changed, UPDATE)
+                copy_subfiles(cfile, cfile.new, ADD_NEW)
+                copy_subfiles(cfile, cfile.delete, DELETE)
 
-        if ftconfig.sync == 'status' and file_status != 'skip':
+        if ftconfig.sync == STATUS and file_status != SKIP:
             cfile.clean_in_progress_file()
         run_script(cfile, 'after', ftconfig.sync)
 
