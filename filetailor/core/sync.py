@@ -358,6 +358,8 @@ def diff_dir(cfile):
 
     # Ignore subdirectories
     ignores = next(os.walk(cfile.source))[1]
+    if ftconfig.sync in [STATUS, RESTORE]:
+        ignores += next(os.walk(cfile.local))[1]
 
     # Get subfiles from source and target
     if cfile.target.is_dir():
