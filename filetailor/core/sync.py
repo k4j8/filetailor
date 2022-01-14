@@ -217,9 +217,7 @@ def create_dir(path, xfile):
         dir_exists = True
     else:
         dir_exists = False
-        if get_option('staging', xfile, xfile.device):
-            create_dir_continue = True
-        elif okay.main(f'"{path}" does not exist. Create?', 'n'):
+        if okay.main(f'"{path}" does not exist. Create?', 'n'):
             create_dir_continue = True
         else:
             create_dir_continue = False
@@ -464,7 +462,7 @@ def get_file_status(cfile, cdevice):
 
         if not cfile.target.exists() and not cfile.target_parent.is_dir():
             # Target nor its parent exist, so offer to create parent dir
-            cprint.plain('Local file\'s parent folder '
+            cprint.plain(f'For "{cfile.file_id}", local file\'s parent folder '
                          + f'"{cfile.target_parent}" does not exist.')
             if not create_dir(cfile.target_parent, cfile):
                 return SKIP
