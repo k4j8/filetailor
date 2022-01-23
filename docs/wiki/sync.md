@@ -21,6 +21,8 @@ status --> backup_or_restore
 backup --> backup_or_restore
 restore --> backup_or_restore
 
+backup_or_restore --> run_script
+
 backup_or_restore --> setup
 
 backup_or_restore --> get_file_status
@@ -37,10 +39,16 @@ backup_or_restore -- dirs --> copy_subfiles
 backup_or_restore -- files --> copy_files
 copy_subfiles -- dirs --> copy_files
 
+copy_files -- both --> copy_file
+copy_file --> copy_file_with_sudo
+
 copy_files -- both --> create_dir
 copy_subfiles -- dirs --> create_dir
+create_dir --> create_dir_with_sudo
 
-copy_files -- both --> copy_file
+copy_file --> check_for_sudo
+create_dir --> check_for_sudo
+backup_or_restore --> check_for_sudo
 
 tailor_file --> main
 main --> update_comments

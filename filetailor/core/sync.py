@@ -149,10 +149,23 @@ class SubFile(CFile):
                         cfile.file_id)
 
 
+def check_for_sudo(xfile, device):
+    """Check if filetailor should use sudo
+
+    Called by `copy_file`, `create_dir`, and `backup_or_restore`
+    """
+    if ftconfig.sync == RESTORE and get_option('sudo', xfile, device):
+        use_sudo = True
+    else:
+        use_sudo = False
+
+    return use_sudo
+
+
 def copy_file_with_sudo(in_progress, target, delete):
     """Copy file with permissions and sudo
 
-    Called by `copy_files` (for files and dirs)
+    Called by `copy_file` (for files and dirs)
     """
 
     if delete:
@@ -171,7 +184,7 @@ def copy_file(in_progress, target, xfile, delete):
     """
 
     copied = False
-    if get_option('sudo', xfile, xfile.device):
+    if check_for_sudo(xfile, xfile.device):
         copy_file_with_sudo(in_progress, target, delete)
     else:
         try:
@@ -222,7 +235,7 @@ def create_dir(path, xfile):
         else:
             create_dir_continue = False
         if create_dir_continue:
-            if get_option('sudo', xfile, xfile.device):
+            if check_for_sudo(xfile, xfile.device):
                 if not get_option('dry_run', xfile, xfile.device):
                     dir_exists = create_dir_with_sudo(path)
             else:
@@ -569,7 +582,7 @@ def setup():
 def run_script(cfile, time, operation):
     """Runs script from YAML
 
-    Called by `status` and `backup_or_restore`
+    Called by `backup_or_restore`
     """
 
     if time == 'before':
@@ -644,7 +657,7 @@ def backup_or_restore():
                 cprint.plain('')
 
                 # Copy file
-                if get_option('sudo', cfile, cfile.device):
+                if check_for_sudo(cfile, cfile.device):
                     cprint.plain('Using "sudo"...')
                 if okay.main(f'Copy file "{cfile.file_id}"?', 'n'):
                     copy_files(cfile)
