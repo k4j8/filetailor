@@ -626,12 +626,8 @@ def backup_or_restore():
         elif ftconfig.sync == STATUS and file_status == DIFFERENT:
             cprint.differ(f'Modified: {cfile.file_id}')
         elif ftconfig.sync == STATUS and file_status == MISSING_TARGET:
-            if ftconfig.sync == BACKUP:
-                cprint.differ(f'THIS LINE SHOULD NOT OCCUR - Not in sync directory: "{cfile.file_id}" does '  # TODO
-                              + f'not exist at "{cfile.target}".')
-            if ftconfig.sync == RESTORE:
-                cprint.differ(f'Not in local directory: "{cfile.file_id}" does '
-                              + f'not exist at "{cfile.target}".')
+            cprint.differ(f'Not in local directory: "{cfile.file_id}" does '
+                          + f'not exist at "{cfile.target}".')
 
         # Report issue if missing source
         elif file_status in [MISSING_SOURCE, MISSING_BOTH]:
