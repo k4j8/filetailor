@@ -25,9 +25,9 @@ During the backup and restore process, filetailor can modify the file contents a
 
 ## Example Usage
 
-Here's how to sync a file to use `dev1home` on `device1` and `dev2home` on `device2`.
+Here's how to sync a file to use `dev1home` on "device1" and `dev2home` on "device2" for the alias `MYHOME`.
 
-**.bashrc** on `device1`:
+**.bashrc** on "device1":
 
 ```bash
 alias MYHOME='/home/dev1home/' #{filetailor device1}
@@ -38,12 +38,12 @@ alias MYHOME='/home/dev1home/' #{filetailor device1}
 [user@device1 ~]$ filetailor backup
 ```
 
-Sync the files using your preferred method of choice to `device2` then restore. Lines with tags for other devices get automatically commented out.
+During backup on "device1", the first line gets commented out because it matches the device name. Sync the backed-up version of the file using your preferred method of choice to "device2" then restore. During restore on "device2", the second line gets uncommented (again, because it matches the device name).
 ```bash
 [user@device2 ~]$ filetailor restore
 ```
 
-**.bashrc** on `device2:`
+**.bashrc** on "device2":
 
 ```bash
 # alias MYHOME='/home/dev1home/' #{filetailor device1}
@@ -71,23 +71,23 @@ See [Alternative Installs](https://github.com/k4j8/filetailor/wiki/Alternative-I
 
 `filetailor.yaml` ("the YAML") controls which files sync to which devices.
 
-You can add/remove files to/from the YAML by running `filetailor add PATHS` and `filetailor remove PATHS` (local paths are okay). Alternatively, you can update the YAML manually by following the comments within.
+You can add/remove files to and from the YAML by running `filetailor add PATHS` and `filetailor remove PATHS` (local paths are okay). Alternatively, you can update the YAML manually by following the comments within.
 
 The YAML also defines variables, which are strings to replace when restoring to a specific device, such as a path to a file that differs between devices. See the [FAQ](https://github.com/k4j8/filetailor/wiki/FAQ) in the wiki for examples.
 
 ### Usage
 
-To backup all files defined in the YAML from the local device to the sync folder, run `filetailor backup`.
+To backup all files defined in the YAML from the local device to the sync folder, run `filetailor backup`. Lines/blocks matching the device name will be commented out as they are copied to the sync folder.
 
-To restore all files defined in the YAML from the sync folder to the local device, run `filetailor restore`.
+To restore all files defined in the YAML from the sync folder to the local device, run `filetailor restore`. Lines/blocks matching the device name will be uncommented as they are copied to the local device.
 
-To list all available commands, run `filetailor --help` or `filetailor COMMAND --help` for command details.
+To list all available commands, run `filetailor --help`. For command details, run `filetailor COMMAND --help`.
 
 ## Line-Specific Control
 
 You can control the contents of individual files by device with line-specific controls such as the [Example Usage](https://github.com/k4j8/filetailor#example-usage) above. There are two types of line-specific controls: single-line and multi-line.
 
-To use a single-line control, append a tag to the line you want to be commented out on other devices. The line will be commented out on all devices *except* those listed within the tag. Single-line control tag format:
+To use a single-line control, append a tag to the line you want to be commented out on other devices. During backup, any lines tagged for the current device will be commented out. During restore, lines tagged for the current device will be uncommented. Single-line control tag format:
 <pre><code class="text">(Code being controlled) <i>COMMENT_SYM</i><b>{filetailor</b> <i>DEVICES</i>...<b>}</b></code></pre>
 `COMMENT_SYM` is any symbol(s) used for comments and must be preceded by at least one space.
 
@@ -95,13 +95,13 @@ To control a block of lines, see [Multi-line Controls](https://github.com/k4j8/f
 
 #### Example: single-line control
 
-How the code should be written on `desktop1`:
+How the code should be written on "desktop1":
 ```bash
 export $device_type="desktop" #{filetailor desktop}
 # export $device_type="laptop" #{filetailor laptop1 laptop2}
 ```
 
-After backing up the file through filetailor and then restoring to `laptop1` or `laptop2`, the code would appear like this:
+After backing up the file through filetailor and then restoring to "laptop1" or "laptop2", the code would appear like this:
 ```bash
 # export $device_type="desktop" #{filetailor desktop}
 export $device_type="laptop" #{filetailor laptop1 laptop2}
