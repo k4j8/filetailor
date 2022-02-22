@@ -278,6 +278,7 @@ def copy_files(xfile, delete=False):
                 cprint.success(f'Deleted "{xfile.target}".')
             else:
                 cprint.success(f'Copied "{xfile.source}" to "{xfile.target}".')
+            print()
 
 
 def copy_subfiles(cfile, subfiles_list, verb):
