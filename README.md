@@ -38,7 +38,7 @@ alias MYHOME='/home/dev1home/' #{filetailor device1}
 [user@device1 ~]$ filetailor backup
 ```
 
-During backup on "device1", the first line gets commented out because it matches the device name. Sync the backed-up version of the file using your preferred method of choice to "device2" then restore. During restore on "device2", the second line gets uncommented (again, because it matches the device name).
+During backup from "device1" to the sync folder, the first line gets commented out because the tag matches the device name. Sync the sync folder with the backed-up version of the file using your preferred method of choice to "device2" then restore with filetailor. During restore on "device2", the second line gets uncommented (again, because the tag matches the device name).
 ```bash
 [user@device2 ~]$ filetailor restore
 ```
