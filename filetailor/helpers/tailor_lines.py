@@ -105,14 +105,15 @@ def main(xfile):
     source_tailored = []
     multiline = []  # List of comment symbols in active multiline
 
+    # Update vars
+    key_list = get_key_list(xfile.yaml_default,
+                            xfile.yaml_device,
+                            xfile.yaml_file,
+                            'file')
+
     for (current_line_number, line) in enumerate(source_text):
         # For each line in file
 
-        # Update vars
-        key_list = get_key_list(xfile.yaml_default,
-                                xfile.yaml_device,
-                                xfile.yaml_file,
-                                'file')
         for key in key_list:
             # Replace vars in `line` with keys for backup; reverse for restore
             var = key_list[key]
