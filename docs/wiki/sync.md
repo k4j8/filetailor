@@ -29,21 +29,21 @@ backup_or_restore --> get_file_status
 
 get_file_status -- dirs --> diff_dir
 
-diff_dir -- dirs --> filter_subfiles
+diff_dir --> filter_subfiles
 
 get_file_status -- files --> tailor_file
-diff_dir -- dirs --> tailor_file
+diff_dir --> tailor_file
 
 backup_or_restore -- dirs --> copy_subfiles
 
 backup_or_restore -- files --> copy_files
-copy_subfiles -- dirs --> copy_files
+copy_subfiles --> copy_files
 
-copy_files -- both --> copy_file
+copy_files --> copy_file
 copy_file --> copy_file_with_sudo
 
-copy_files -- both --> create_dir
-copy_subfiles -- dirs --> create_dir
+copy_files --> create_dir
+copy_subfiles --> create_dir
 create_dir --> create_dir_with_sudo
 
 copy_file --> check_for_sudo
