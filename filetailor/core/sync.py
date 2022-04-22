@@ -644,13 +644,13 @@ def backup_or_restore():
 
             if cfile.source.is_file():
                 # For files
-                if not get_option('no_diff', cfile, cfile.device):
-                    # Print diff or state target doesn't exist
-                    if file_status == DIFFERENT:
+                # Print diff or state target doesn't exist
+                if file_status == DIFFERENT:
+                    if not get_option('no_diff', cfile, cfile.device):
                         diff(cfile.target, cfile.in_progress)
-                    elif file_status == MISSING_TARGET:
-                        cprint.plain(f'For "{cfile.file_id}", '
-                                     + f'"{cfile.target}" does not exist.')
+                elif file_status == MISSING_TARGET:
+                    cprint.plain(f'For "{cfile.file_id}", '
+                                 + f'"{cfile.target}" does not exist.')
                 cprint.plain('')
 
                 # Copy file
