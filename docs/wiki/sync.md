@@ -2,7 +2,7 @@
 graph
 linkStyle default interpolate basis
 
-subgraph tailor_line
+subgraph tailor_lines
 main
 update_comments
 end
