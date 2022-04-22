@@ -10,7 +10,7 @@ from filetailor.helpers import cprint
 from filetailor.helpers.get_key_list import main as get_key_list
 
 
-class LineStuff:
+class LineAttributes:
 
     # Example: dummy_text //{filetailor host1 host2} additional text
     # Regex accounts for `{begin filetailor`, `{end filetailor`, and just
@@ -18,7 +18,7 @@ class LineStuff:
     global P1
     P1 = re.compile(r'(\S*)\{(begin |end |)filetailor (.*?)\}')
 
-    def __init__(self, line, number):
+    def __init__(self, line, number, key_list={}):
         self.line = line
         self.number = number
         self.indent = get_indent(self.line)
@@ -39,7 +39,19 @@ class LineStuff:
             self.action = m1.group(2)
 
             # From example, `devices` = `device1 device2`
-            self.devices = m1.group(3).split()
+            devices = m1.group(3).split()
+
+            # Converted device(s) have had vars replaced with values
+            converted_devices = []
+
+            for device in devices:
+                converted_device = device
+                for key in key_list:
+                    # Replace vars in `line` with keys for backup; reverse for restore
+                    var = key_list[key]
+                    converted_device = converted_device.replace(key, var)
+                converted_devices = converted_devices + converted_device.split()
+            self.devices = converted_devices
 
     def update(self, source_text):
         """Update line and indent with new `self.number`"""
@@ -123,7 +135,7 @@ def main(xfile):
                 line = line.replace(key, var)
 
         # Update filetailor tags
-        cline = LineStuff(line, current_line_number)
+        cline = LineAttributes(line, current_line_number, key_list=key_list)
         if cline.action is not None and xfile.device_id in cline.devices:
             if cline.action == '':
                 # Single-line edit
@@ -131,7 +143,7 @@ def main(xfile):
             elif cline.action == 'begin ':
                 # Check for multi-line start
                 multiline.append(cline.comment_char)
-                scan = LineStuff(line, current_line_number)
+                scan = LineAttributes(line, current_line_number)
                 indent = scan.indent
                 while True:
                     # Get smallest indent for entire multi-line block,
