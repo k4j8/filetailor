@@ -447,6 +447,8 @@ def get_file_status(cfile, cdevice):
                           cfile.file_id)
             return SKIP
 
+    run_script(cfile, 'before', ftconfig.sync)
+
     # Define file locations `sync` and `local`
     cfile.sync = Path(os.path.join(ftconfig.paths['sync_dir'], cfile.file_id))
     staging_dir = get_option('staging', cfile, cfile.device)
@@ -602,7 +604,7 @@ def run_script(cfile, time, operation):
         cprint.plain(f'For file "{cfile.file_id}", running {script_name} '
                      + f'script "{script_command}"')
         shutil.os.system(script_command)
-    except (KeyError, TypeError):
+    except (KeyError, TypeError, UnboundLocalError):
         pass
 
 
@@ -618,7 +620,6 @@ def backup_or_restore():
         # Replace vars in file YAML
         cfile = CFile(file_id, cdevice)
 
-        run_script(cfile, 'before', ftconfig.sync)
         file_status = get_file_status(cfile, cdevice)
 
         # If running status, report the status
@@ -675,9 +676,10 @@ def backup_or_restore():
                 copy_subfiles(cfile, cfile.new, ADD_NEW)
                 copy_subfiles(cfile, cfile.delete, DELETE)
 
-        if ftconfig.sync == STATUS and file_status != SKIP:
-            cfile.clean_in_progress_file()
-        run_script(cfile, 'after', ftconfig.sync)
+        if file_status != SKIP:
+            if ftconfig.sync == STATUS:
+                cfile.clean_in_progress_file()
+            run_script(cfile, 'after', ftconfig.sync)
 
 
 def status():
