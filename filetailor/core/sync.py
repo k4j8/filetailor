@@ -215,6 +215,7 @@ def create_dir_with_sudo(path):
 
     shutil.os.system(f'sudo mkdir --parents "{path}"')
     cprint.success(f'Created "{path}" with sudo.')
+    print()
 
     return True
 
@@ -243,6 +244,7 @@ def create_dir(path, xfile):
                     if not get_option('dry_run', xfile, xfile.device):
                         os.makedirs(path)
                     cprint.success(f'Created "{path}".')
+                    print()
                     dir_exists = True
                 except PermissionError:
                     if okay.main('Insufficient permissions to create '
@@ -589,12 +591,12 @@ def run_script(cfile, time, operation):
     """
 
     if time == 'before':
-        if operation in ['sync', BACKUP]:
+        if operation in [STATUS, BACKUP]:
             script_name = 'before_backup'
         elif operation == RESTORE:
             script_name = 'before_restore'
     elif time == 'after':
-        if operation in ['sync', BACKUP]:
+        if operation in [STATUS, BACKUP]:
             script_name = 'after_backup'
         elif operation == RESTORE:
             script_name = 'after_restore'
@@ -621,6 +623,8 @@ def backup_or_restore():
         cfile = CFile(file_id, cdevice)
 
         file_status = get_file_status(cfile, cdevice)
+        if file_status == SKIP:
+            continue
 
         # If running status, report the status
         if ftconfig.sync == STATUS and file_status == SAME:
