@@ -18,7 +18,7 @@ import filetailor.helpers.get_key_list
 import filetailor.helpers.okay_to_continue as okay
 import filetailor.helpers.tailor_lines
 from filetailor.helpers import cprint
-from filetailor.helpers.diff import main as diff
+from filetailor.helpers.diff import diff
 from filetailor.helpers.get_option import main as get_option
 
 STATUS = 'status'
@@ -661,7 +661,8 @@ def backup_or_restore():
                 # Copy file
                 if check_for_sudo(cfile, cfile.device):
                     cprint.plain('Using "sudo"...')
-                if okay.main(f'Copy file "{cfile.file_id}"?', 'n'):
+                if okay.main(f'Copy file "{cfile.file_id}"?', 'd',
+                             src=cfile.source, dst=cfile.target):
                     copy_files(cfile)
 
             elif cfile.source.is_dir():

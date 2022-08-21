@@ -17,7 +17,7 @@ During the backup and restore process, filetailor can modify the file contents a
   - [Usage](#usage)
 - [Line-Specific Control](#line-specific-control)
     - [Example: single-line control](#example-single-line-control)
-- [Diff Tool](#diff-tool)
+- [Diff Programs](#diff-programs)
 - [More Help](#more-help)
 - [Contributing](#contributing)
 
@@ -113,21 +113,19 @@ How the code would look on any other device and in the filetailor sync folder:
 # export $device_type="laptop" #{filetailor laptop1 laptop2}
 ```
 
-## Diff Tool
+## Diff Programs
 
-Before backing up or restoring files, filetailor will show a diff of the changes. To set the diff tool for filetailor, add the following option to `filetailor.ini`.
+Before backing up or restoring files, filetailor will show a diff of the changes. To set the diff programs for filetailor, add the following option to `filetailor.ini`.
 ```ini
 [TOOLS]
-diff_tool = YOUR_FAVORITE_DIFF_TOOL
+diff_pager = YOUR_FAVORITE_DIFF_PROGRAM  # for viewing diff in terminal
+difftool = YOUR_FAVORITE_DIFFTOOL  # for making edits during diff in external tool
 ```
 
-If `diff_tool` is not set, filetailor uses the first defined diff tool in the following list:
-- `diff.tool` (from Git config, [git-difftool docs](https://git-scm.com/docs/git-difftool))
-- `merge.tool` (from Git config, [git-mergetool docs](https://git-scm.com/docs/git-mergetool))
-- `core.pager` (from Git config, [git-config docs](https://git-scm.com/docs/git-config))
-- `diff`
+If `diff_pager` is not set, filetailor will use `core.pager` (from Git config, [git-config docs](https://git-scm.com/docs/git-config)) if defined, otherwise uses `diff`.
+If `difftool` is not set, filetailor will use `diff.tool` (from Git config, [git-difftool docs](https://git-scm.com/docs/git-difftool)) if defined, otherwise uses `diff`.
 
-One popular supported diff tool is [Delta](https://github.com/dandavison/delta#installation). To install, follow the installation instructions in the link.
+One popular supported diff pager is [Delta](https://github.com/dandavison/delta#installation). To install, follow the installation instructions in the link.
 
 Run the following command to set Delta as your [default pager for Git](https://www.git-scm.com/book/en/v2/Customizing-Git-Git-Configuration) (and thus filetailor):
 ```bash

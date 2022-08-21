@@ -53,7 +53,8 @@ def create_filetailor_ini(filetailor_ini_path):
             config['PATHS']['in-progress_dir'] = os.path.join(
                 tempfile.gettempdir(), 'filetailor')
         config['TOOLS'] = {}
-        config['TOOLS']['diff_tool'] = 'None'
+        config['TOOLS']['diff_pager'] = 'None'
+        config['TOOLS']['difftool'] = 'None'
         with open(filetailor_ini_path, 'w', encoding='UTF-8') as configfile:
             config.write(configfile)
 
