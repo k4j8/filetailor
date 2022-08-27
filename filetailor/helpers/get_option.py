@@ -16,12 +16,12 @@ def main(option, obj1=None, obj2=None):
         # Check obj1 then, if not found, obj2
         if obj is None:
             continue
-        if (obj.type == 'file'
+        if (obj.type in ['file', 'subfile']
                 and obj.yaml_file
                 and option in obj.yaml_file):
             result = obj.yaml_file[option]
             break
-        if (obj.type == 'device'
+        if (obj.type in ['device']
                 and obj.yaml_device is not None
                 and option in obj.yaml_device):
             result = obj.yaml_device[option]
