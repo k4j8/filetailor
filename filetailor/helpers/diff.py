@@ -26,7 +26,7 @@ def get_diff_program(src, dst, ftconfig_name, gitconfig_name):
     logging.debug('Getting diff program')
 
     # Get diff program from ftconfig
-    diff_program = ftconfig.tools.get('diff_pager', False)
+    diff_program = ftconfig.tools.get('diff_pager', 'none')
     if diff_program.lower() == 'none':
         # Ignore the default placeholder text of "None"
         diff_program = None
