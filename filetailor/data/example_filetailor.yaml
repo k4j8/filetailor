@@ -2,8 +2,6 @@
 # Everything is optional unless otherwise specified
 # If omitted, False by default
 
-# See examples at https://github.com/k4j8/filetailor/wiki/Example-YAML-Configurations
-
 default:
 
   # Replace VARIABLE_NAME with VARIABLE_VALUE in YAML and file contents
