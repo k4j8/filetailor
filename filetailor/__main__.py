@@ -270,7 +270,7 @@ def main():
     parser_sync_restore = subparsers.add_parser(
         'restore',
         help='copy files from sync folder to local device')
-    parser_sync_restore.add_argument('--no-bak', action='store_true')
+    parser_sync_restore.add_argument('--no-backup', action='store_true')
     parser_sync_restore = update_parser_sync_restore(parser_sync_restore, config_ini)
     parser_sync_restore.set_defaults(func=call_sync_restore)
 

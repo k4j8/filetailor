@@ -267,7 +267,7 @@ def copy_files(xfile, delete=False):
         return
 
     if (ftconfig.sync == RESTORE
-            and not get_option('no_bak', xfile, xfile.device)
+            and not get_option('no_backup', xfile, xfile.device)
             and not get_option('dry_run', xfile, xfile.device)):
         # Create backup
         if xfile.target.is_file():
