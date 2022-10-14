@@ -7,6 +7,7 @@ import copy
 import filecmp
 import logging
 import os
+import platform
 import re
 import shutil
 import stat
@@ -192,7 +193,7 @@ def copy_file(in_progress, target, xfile, delete):
                 os.remove(target)
             else:
                 shutil.copy2(in_progress, target)
-            if ftconfig.sync == RESTORE:
+            if ftconfig.sync == RESTORE and sys.platform.startswith('linux'):
                 # Apply permissions
                 os.chown(target, xfile.stats[stat.ST_UID],
                          xfile.stats[stat.ST_GID])
@@ -304,7 +305,8 @@ def copy_subfiles(cfile, subfiles_list, verb):
                     # Copy/delete each file without asking
                     if not get_option('dry_run', cfile, cfile.device):
                         copy_files(subfile, delete)
-                elif okay.main(f'\n{verb} "{file_id}"?', 'n'):
+                elif okay.main(f'\n{verb} "{file_id}"?', 'd',
+                               src=subfile.source, dst=subfile.target):
                     # Asked to copy/delete file, answer was yes
                     if not get_option('dry_run', cfile, cfile.device):
                         copy_files(subfile, delete)
