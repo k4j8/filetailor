@@ -35,7 +35,7 @@ def create_filetailor_ini(filetailor_ini_path):
         if not os.path.isdir(parent_dir):
             # Create filetailor directory if it does not exist
             if not os.path.isfile(parent_dir) and not get_option('dry_run'):
-                os.mkdir(parent_dir)
+                os.makedirs(parent_dir)
             else:
                 cprint.plain(f'File named "{parent_dir}" already exists. '
                              + 'Please delete it and try again.')
