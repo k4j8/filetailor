@@ -6,11 +6,12 @@ import os
 import sys
 
 import yaml
+
 from filetailor.helpers import cprint
 from filetailor.helpers.load_ini_files import find_filetailor_ini
 
-DEFAULT_KEYS = ['vars', 'yaml_only', 'file_only', 'quiet', 'no_diff', 'no_backup',
-                'yes', 'dry_run', 'sudo', 'staging']
+DEFAULT_KEYS = ['vars', 'yaml_only', 'file_only', 'quiet', 'no_diff',
+                'no_backup', 'yes', 'dry_run', 'sudo', 'staging']
 FILE_KEYS = ['path', 'vars', 'quiet', 'no_diff', 'no_backup', 'yes', 'dry_run',
              'sudo', 'staging', 'unique', 'include_devices', 'exclude_devices',
              'include_contents', 'exclude_contents', 'scripts']
