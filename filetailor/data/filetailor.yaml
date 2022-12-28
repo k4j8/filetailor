@@ -1,6 +1,6 @@
 ---
 # Everything is optional unless otherwise specified
-# If omitted, False by default
+# If omitted, false by default
 #
 # Read "example_filetailor.yaml" in the same directory as this file for more options
 # See examples at https://github.com/k4j8/filetailor/wiki/FAQ

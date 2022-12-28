@@ -1,6 +1,6 @@
 ---
 # Everything is optional unless otherwise specified
-# If omitted, False by default
+# If omitted, false by default
 
 default:
 
@@ -18,12 +18,12 @@ default:
 
   # Default options
   # These only apply when backing up or restoring a file
-  quiet:     True|False
-  no_diff:   True|False
-  no_backup: True|False
-  yes:       True|False
-  dry_run:   True|False
-  sudo:      True|False
+  quiet:     true|false
+  no_diff:   true|false
+  no_backup: true|false
+  yes:       true|false
+  dry_run:   true|false
+  sudo:      true|false
 
   # Save files to STAGING_PATH instead of normal file PATH
   # Each file is saved in "STAGING_PATH/FILE_ID/filename_with_extension".
@@ -52,20 +52,20 @@ file FILE_ID:
   - VARIABLE_NAME
 
   # File-specific options (overrides default and device)
-  quiet:   True|False
-  no_diff: True|False
-  no_bak:  True|False
-  yes:     True|False
-  dry_run: True|False
-  sudo:    True|False
+  quiet:   true|false
+  no_diff: true|false
+  no_bak:  true|false
+  yes:     true|false
+  dry_run: true|false
+  sudo:    true|false
 
   # Save files to STAGING_PATH instead of normal file PATH
   # Each file is saved in "STAGING_PATH/FILE_ID/filename_with_extension".
   staging: STAGING_PATH
 
-  # If unique = True, device name will be appending to filename and no
+  # If unique = true, device name will be appending to filename and no
   # tailoring between devices will take place
-  unique: True|False
+  unique: true|false
 
   # Use include_devices or exclude_devices but not both
   include_devices : DEVICE_ID...
