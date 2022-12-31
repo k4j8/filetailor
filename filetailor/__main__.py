@@ -57,7 +57,7 @@ def update_parser_all(parser, config_ini):
     """Adds arguments to the parser"""
     parser.add_argument('-q', '--quiet', action='store_true',
                         help='suppress all output not requiring user input')
-    parser.add_argument('-y', '--yes', action='store_true',
+    parser.add_argument('-y', '--assumeyes', action='store_true',
                         help='suppress all output requiring user input by '
                         + 'assuming yes')
     if config_ini['DEFAULT'].get('testing', False):

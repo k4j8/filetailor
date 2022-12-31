@@ -9,8 +9,9 @@ from filetailor.helpers.diff import difftool
 def get_response(msg, default, obj1=None, obj2=None):
     """Get user response"""
 
-    # Check if `--yes` is applied in default, device, file, or arg settings
-    if filetailor.helpers.get_option.main('yes', obj1, obj2):
+    # Check if `--assumeyes` is applied in default, device, file, or arg
+    # settings
+    if filetailor.helpers.get_option.main('assumeyes', obj1, obj2):
         return 'a'
 
     # Determine the options

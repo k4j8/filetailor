@@ -21,7 +21,7 @@ default:
   quiet:     true|false
   no_diff:   true|false
   no_backup: true|false
-  yes:       true|false
+  assumeyes: true|false
   dry_run:   true|false
   sudo:      true|false
 
@@ -52,12 +52,12 @@ file FILE_ID:
   - VARIABLE_NAME
 
   # File-specific options (overrides default and device)
-  quiet:   true|false
-  no_diff: true|false
-  no_bak:  true|false
-  yes:     true|false
-  dry_run: true|false
-  sudo:    true|false
+  quiet:     true|false
+  no_diff:   true|false
+  no_bak:    true|false
+  assumeyes: true|false
+  dry_run:   true|false
+  sudo:      true|false
 
   # Save files to STAGING_PATH instead of normal file PATH
   # Each file is saved in "STAGING_PATH/FILE_ID/filename_with_extension".

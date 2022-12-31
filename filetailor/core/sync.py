@@ -306,6 +306,7 @@ def copy_subfiles(cfile, subfiles_list, verb):
                     if not get_option('dry_run', cfile, cfile.device):
                         copy_files(subfile, delete)
                 elif okay.main(f'\n{verb} "{file_id}"?', 'd',
+                               obj1=cfile, obj2=cfile.device,
                                src=subfile.source, dst=subfile.target):
                     # Asked to copy/delete file, answer was yes
                     if not get_option('dry_run', cfile, cfile.device):
@@ -664,6 +665,7 @@ def backup_or_restore():
                 if check_for_sudo(cfile, cfile.device):
                     cprint.plain('Using "sudo"...')
                 if okay.main(f'Copy file "{cfile.file_id}"?', 'd',
+                             obj1=cfile, obj2=cfile.device,
                              src=cfile.source, dst=cfile.target):
                     copy_files(cfile)
 
