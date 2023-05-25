@@ -666,7 +666,7 @@ def backup_or_restore():
                     cprint.plain('Using "sudo"...')
                 if okay.main(f'Copy file "{cfile.file_id}"?', 'd',
                              obj1=cfile, obj2=cfile.device,
-                             src=cfile.source, dst=cfile.target):
+                             src=cfile.in_progress, dst=cfile.target):
                     copy_files(cfile)
 
             elif cfile.source.is_dir():
