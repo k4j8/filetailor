@@ -97,7 +97,7 @@ To control a block of lines, see [Multi-line Controls](https://github.com/k4j8/f
 
 #### Example: single-line control
 
-How the code should be written on "desktop1":
+How the code should be written on "desktop":
 ```bash
 export $device_type="desktop" #{filetailor desktop}
 # export $device_type="laptop" #{filetailor laptop1 laptop2}
