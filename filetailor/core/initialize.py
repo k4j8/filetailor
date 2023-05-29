@@ -117,7 +117,9 @@ def main():
                 init_complete = False
 
     if init_complete:
-        cprint.plain('\nfiletailor initialization complete.')
+        cprint.plain('\nfiletailor initialization complete. Be sure to use Git, '
+                     + 'Syncthing, etc. to sync the `sync_dir` and `yaml_dir` '
+                     + 'directories between your devices.')
     else:
         cprint.error('\nfiletailor initialization NOT complete, run ' +
                      '"filetailor init" again.')

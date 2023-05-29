@@ -67,6 +67,8 @@ $ filetailor init
 # Accept confirmations to create directories
 ```
 
+To sync filetailor between devices, sync the `sync_dir` and `yaml_dir` folders created in the above steps using Git, Syncthing, etc.
+
 See [Alternative Installs](https://github.com/k4j8/filetailor/wiki/Alternative-Installs) for other installation methods.
 
 ### Configuration
