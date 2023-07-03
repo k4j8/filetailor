@@ -140,9 +140,13 @@ def main(xfile):
             if cline.action == '':
                 # Single-line edit
                 line = update_comments(line, cline.comment_char, cline.indent)
-            elif cline.action == 'begin ':
-                # Check for multi-line start
-                multiline.append(cline.comment_char)
+            elif cline.action in ['begin ', 'end ']:
+                if cline.action == 'begin ':
+                    # Check for multi-line start
+                    multiline.append(cline.comment_char)
+                elif cline.action == 'end ':
+                    # Check for multi-line stop
+                    del multiline[-1]
                 scan = LineAttributes(line, current_line_number)
                 indent = scan.indent
                 while True:
@@ -153,10 +157,6 @@ def main(xfile):
                     indent = min(indent, scan.indent)
                     if indent == 0 or scan.action != 'end ':
                         break
-            elif cline.action == 'end ':
-                # Check for multi-line stop
-                del multiline[-1]
-                indent = None
         elif len(multiline) > 0:
             # Update multi-line edits
             cline.comment_char = multiline[-1]
@@ -168,5 +168,6 @@ def main(xfile):
         # Multi-line error
         cprint.error(f'ERROR: In "{xfile.file_id}", multi-line control begun '
                      + 'but not ended.', xfile)
+        input('Press return to continue.')
 
     return source_tailored
