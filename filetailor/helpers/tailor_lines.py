@@ -4,6 +4,7 @@ specific device based on the YAML
 """
 
 import re
+import sys
 
 import filetailor.config as ftconfig
 from filetailor.helpers import cprint
@@ -113,7 +114,14 @@ def main(xfile):
     """
 
     with open(xfile.source) as source_file:
-        source_text = source_file.readlines()
+        try:
+            source_text = source_file.readlines()
+        except UnicodeDecodeError:
+            cprint.error(f'ERROR: "{xfile.file_id}" is not readable. Please '
+                         + 'exclude file in YAML.', xfile)
+            input('Press return to exit.')
+            sys.exit()
+
 
     source_tailored = []
     multiline = []  # List of comment symbols in active multiline
