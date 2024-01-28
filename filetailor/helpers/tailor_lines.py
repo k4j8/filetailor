@@ -21,12 +21,14 @@ class LineAttributes:
     def __init__(self, line, number, key_list={}):
         self.line = line
         self.number = number
-        self.indent = get_indent(self.line)
+        self.indent = self.get_indent()
         self.comment_char = None
         self.action = None
         self.devices = None
+        self.get_action(key_list)
 
-        m1 = P1.search(line)
+    def get_action(self, key_list):
+        m1 = P1.search(self.line)
         if m1:
 
             # From `{filetailor`, `comment_sym` is equal to all preceding
@@ -56,7 +58,19 @@ class LineAttributes:
     def update(self, source_text):
         """Update line and indent with new `self.number`"""
         self.line = source_text[self.number]
-        self.indent = get_indent(self.line)
+        self.indent = self.get_indent(self.line)
+
+    def get_indent(self):
+        """Get number of whitespaces at beginning of line"""
+
+        if len(self.line) == len(self.line.lstrip()):
+            # No indentation
+            indent = 0
+        else:
+            # Some indentation
+            indent = len(self.line) - len(self.line.lstrip())
+
+        return indent
 
 
 def update_comments(line, comment_char, indent):
@@ -90,19 +104,6 @@ def update_comments(line, comment_char, indent):
             line = line.replace(comment_char, '', 1)
 
     return line
-
-
-def get_indent(line):
-    """Get number of whitespaces at beginning of line"""
-
-    if len(line) == len(line.lstrip()):
-        # No indentation
-        indent = 0
-    else:
-        # Some indentation
-        indent = len(line) - len(line.lstrip())
-
-    return indent
 
 
 def main(xfile):
@@ -144,23 +145,14 @@ def main(xfile):
                 if cline.action == 'begin ':
                     # Check for multi-line start
                     multiline.append(cline.comment_char)
+                    multiline_begin = LineAttributes(line, current_line_number)
                 elif cline.action == 'end ':
                     # Check for multi-line stop
                     del multiline[-1]
-                scan = LineAttributes(line, current_line_number)
-                indent = scan.indent
-                while True:
-                    # Get smallest indent for entire multi-line block,
-                    # including `begin ` and `end `
-                    scan.number += 1
-                    scan.update(source_text)
-                    indent = min(indent, scan.indent)
-                    if indent == 0 or scan.action != 'end ':
-                        break
         elif len(multiline) > 0:
             # Update multi-line edits
             cline.comment_char = multiline[-1]
-            line = update_comments(line, cline.comment_char, indent)
+            line = update_comments(line, cline.comment_char, multiline_begin.indent)
 
         source_tailored.append(line)
 
