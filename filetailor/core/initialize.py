@@ -105,10 +105,11 @@ def main():
         else:
             if okay.main(f'\nCreate "{os_path}" as {key} folder?', 'y'):
                 if not get_option('dry_run'):
-                    Path(os_path).mkdir(parents=True)
-                if key == 'yaml':
-                    # Copy the default filetailor.yaml for yaml folder
-                    copy_filetailor_ini(data, os_path)
+                    if key == 'yaml':
+                        # Copy the default filetailor.yaml for yaml folder
+                        copy_filetailor_ini(data, os_path)
+                    else:
+                        Path(os_path).mkdir(parents=True)
                 else:
                     cprint.success(f'Created "{os_path}".')
             else:

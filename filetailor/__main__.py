@@ -140,7 +140,7 @@ def prep_yaml():
             os_path = Path(paths[key])
 
             # Check if folder exists
-            if not os.path.isdir(os_path):
+            if not os.path.exists(os_path):
                 print(f'ERROR: "{os_path}" does not exist ({key}). '
                       + 'Run "filetailor init" to create.')
                 sys.exit()
