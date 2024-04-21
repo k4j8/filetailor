@@ -103,10 +103,10 @@ def main():
         if os.path.isdir(os_path):
             cprint.plain(f'\n"{os_path}" already exists ({key}).')
         else:
-            if okay.main(f'\nCreate "{os_path}" as {key} folder?', 'y'):
+            if okay.main(f'\nCreate "{os_path}" for {key}?', 'y'):
                 if not get_option('dry_run'):
                     if key == 'yaml':
-                        # Copy the default filetailor.yaml for yaml folder
+                        # Copy the default filetailor.yaml for yaml
                         copy_filetailor_ini(data, os_path)
                     else:
                         Path(os_path).mkdir(parents=True)
