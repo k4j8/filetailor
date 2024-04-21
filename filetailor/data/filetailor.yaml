@@ -2,7 +2,7 @@
 # Everything is optional unless otherwise specified
 # If omitted, false by default
 #
-# Read "example_filetailor.yaml" in the same directory as this file for more options
+# Read https://github.com/k4j8/filetailor/blob/main/filetailor/data/example_filetailor.yaml for more options
 # See examples at https://github.com/k4j8/filetailor/wiki/FAQ
 #
 # default:
