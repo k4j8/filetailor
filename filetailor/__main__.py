@@ -133,14 +133,14 @@ def prep_yaml():
         # Check folders exist
         for key in paths:
 
-            if key not in ['sync_dir', 'yaml_dir', 'in-progress_dir']:
+            if key not in ['sync_dir', 'yaml', 'in-progress_dir']:
                 continue
 
             # Convert to Path type
             os_path = Path(paths[key])
 
             # Check if folder exists
-            if not os.path.isdir(os_path):
+            if not os.path.exists(os_path):
                 print(f'ERROR: "{os_path}" does not exist ({key}). '
                       + 'Run "filetailor init" to create.')
                 sys.exit()
@@ -162,7 +162,7 @@ def prep_yaml():
 # CORE FUNCTIONS
 
 def call_init():
-    """Create filetailor.ini or create sync_dir and yaml_dir"""
+    """Create filetailor.ini or create sync_dir and yaml"""
     filetailor.core.initialize.main()
 
 

@@ -12,10 +12,10 @@ from filetailor.helpers import cprint
 
 
 def check_paths(paths):
-    """Checks 'sync_dir' and 'yaml_dir' are in paths"""
+    """Checks 'sync_dir' and 'yaml' are in paths"""
 
     keys_exist = ('sync_dir' in paths
-                  and 'yaml_dir' in paths
+                  and 'yaml' in paths
                   and 'in-progress_dir' in paths)
     return keys_exist
 
