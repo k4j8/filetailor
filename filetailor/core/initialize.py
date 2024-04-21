@@ -21,9 +21,7 @@ def copy_filetailor_ini(data, os_path):
 
     if not get_option('dry_run'):
         shutil.copyfile(os.path.join(data, 'filetailor.yaml'),
-                        os.path.join(os_path, 'filetailor.yaml'))
-        shutil.copyfile(os.path.join(data, 'example_filetailor.yaml'),
-                        os.path.join(os_path, 'example_filetailor.yaml'))
+                        os_path)
     cprint.success(f'Created "{os_path}" and default "filetailor.yaml".')
 
 
@@ -46,7 +44,7 @@ def create_filetailor_ini(filetailor_ini_path):
         config = configparser.ConfigParser()
         config['PATHS'] = {}
         config['PATHS']['sync_dir'] = os.path.join(dirs.user_data_dir, 'sync')
-        config['PATHS']['yaml_dir'] = os.path.join(dirs.user_data_dir, 'yaml')
+        config['PATHS']['yaml']     = os.path.join(dirs.user_data_dir, 'filetailor.yaml')
         if sys.platform in ['linux', 'darwin']:
             config['PATHS']['in-progress_dir'] = dirs.user_cache_dir
         else:
@@ -86,12 +84,12 @@ def main():
 
     cprint.plain('Reading settings from "filetailor.ini"...')
 
-    # If sync_dir, yaml_dir, and in-progress_dir do not exist, create them
+    # If sync_dir, yaml, and in-progress_dir do not exist, create them
     cprint.plain('Creating filetailor directories...')
     init_complete = True
 
     # Check folders exist
-    for key in ['sync_dir', 'yaml_dir', 'in-progress_dir']:
+    for key in ['sync_dir', 'yaml', 'in-progress_dir']:
 
         if key not in paths:
             cprint.error(f'\nMissing "{key}" in "filetailor.ini"')
@@ -108,7 +106,7 @@ def main():
             if okay.main(f'\nCreate "{os_path}" as {key} folder?', 'y'):
                 if not get_option('dry_run'):
                     Path(os_path).mkdir(parents=True)
-                if key == 'yaml_dir':
+                if key == 'yaml':
                     # Copy the default filetailor.yaml for yaml folder
                     copy_filetailor_ini(data, os_path)
                 else:
@@ -118,7 +116,7 @@ def main():
 
     if init_complete:
         cprint.plain('\nfiletailor initialization complete. Be sure to use Git, '
-                     + 'Syncthing, etc. to sync the `sync_dir` and `yaml_dir` '
+                     + 'Syncthing, etc. to sync the `sync_dir` and `yaml` '
                      + 'directories between your devices.')
     else:
         cprint.error('\nfiletailor initialization NOT complete, run ' +

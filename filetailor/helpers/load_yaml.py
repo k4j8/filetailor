@@ -41,20 +41,19 @@ def main(paths):
 
     # Check directories exist
     folders_found = True
-    expected_folders = ('yaml_dir', 'sync_dir', 'in-progress_dir')
-    for expected_folder in expected_folders:
-        if expected_folder not in paths.keys():
+    expected_keys = ('yaml', 'sync_dir', 'in-progress_dir')
+    for expected_key in expected_keys:
+        if expected_key not in paths.keys():
             filetailor_ini_path = find_filetailor_ini()
-            cprint.error(f'"{expected_folder}" not found in '
+            cprint.error(f'"{expected_key}" not found in '
                          + f'"{filetailor_ini_path}".')
             folders_found = False
     if not folders_found:
         cprint.plain('Exiting...')
         sys.exit()
 
-    # Get list of all YAML files and merge
-    yaml_path = os.path.join(paths['yaml_dir'], 'filetailor.yaml')
-    with open(yaml_path, 'r') as f:
+    # Get filetailor.yaml
+    with open(paths['yaml'], 'r') as f:
         data = yaml.load(f, Loader=yaml.Loader)
 
     # Split YAML into 3 dictionaries

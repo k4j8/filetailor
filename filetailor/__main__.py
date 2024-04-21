@@ -133,7 +133,7 @@ def prep_yaml():
         # Check folders exist
         for key in paths:
 
-            if key not in ['sync_dir', 'yaml_dir', 'in-progress_dir']:
+            if key not in ['sync_dir', 'yaml', 'in-progress_dir']:
                 continue
 
             # Convert to Path type
@@ -162,7 +162,7 @@ def prep_yaml():
 # CORE FUNCTIONS
 
 def call_init():
-    """Create filetailor.ini or create sync_dir and yaml_dir"""
+    """Create filetailor.ini or create sync_dir and yaml"""
     filetailor.core.initialize.main()
 
 

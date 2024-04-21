@@ -75,8 +75,7 @@ def main(operation):
     yaml_files = ftconfig.yaml_files
 
     # Load `filetailor.yaml` using ruamel
-    filetailor_yaml_path = os.path.expanduser(
-            os.path.join(ftconfig.paths['yaml_dir'], 'filetailor.yaml'))
+    filetailor_yaml_path = os.path.expanduser(ftconfig.paths['yaml'])
     ruamel = YAML()
     with open(filetailor_yaml_path, 'r') as filetailor_yaml:
         data = ruamel.load(filetailor_yaml)

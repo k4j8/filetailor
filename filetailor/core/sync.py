@@ -70,9 +70,9 @@ class CDevice():
                 # Replace vars in `yaml_file` from `yaml_device` and
                 # `YAML_DEFAULT`
                 self.replace_dict_values(yaml_file, key, var)
-            else:
-                # Replace vars in `yaml_device` from `YAML_DEFAULT`
-                self.replace_dict_values(yaml_device, key, var)
+            # else:
+            #     # Replace vars in `yaml_device` from `YAML_DEFAULT`
+            #     self.replace_dict_values(yaml_device, key, var)
 
         if yaml_file:
             return yaml_file
