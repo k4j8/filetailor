@@ -373,23 +373,21 @@ def diff_dir(cfile):
     Called by `get_file_status` (for dirs)
     """
 
-    # Ignore subdirectories
-    ignores = next(os.walk(cfile.source))[1]
-    try:
-        if ftconfig.sync in [STATUS, RESTORE]:
-            ignores += next(os.walk(cfile.local))[1]
-    except StopIteration:
-        pass
-
     # Get subfiles from source and target
     if cfile.target.is_dir():
-        subfiles = os.listdir(cfile.source) + os.listdir(cfile.target)
+        targets = [cfile.source, cfile.target]
     else:
-        subfiles = os.listdir(cfile.source)
+        targets = [cfile.source]
+    subfiles = []
+    for xfile in [cfile.source, cfile.target]:
+        for root, dirs, files in os.walk(xfile):
+            for dir in dirs:
+                for file in files:
+                    subfiles.append(os.path.join(root, dir, file))
 
     # Ignore `.filetailor_backup` files
     search_criteria = re.compile(r'\.filetailor_backup$')
-    ignores += filter_subfiles(search_criteria, subfiles, True)
+    ignores = filter_subfiles(search_criteria, subfiles, True)
 
     # Update ignores based on YAML
     if 'include_contents' in cfile.yaml_file:
