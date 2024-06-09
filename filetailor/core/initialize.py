@@ -100,7 +100,10 @@ def main():
         os_path = Path(paths[key])
 
         # Check if folder exists, otherwise create path
-        if os.path.isdir(os_path):
+        if (
+               (key in ['sync_dir', 'in-progress_dir'] and os.path.isdir(os_path))
+            or (key == 'yaml'                          and os.path.isfile(os_path))
+           ):
             cprint.plain(f'\n"{os_path}" already exists ({key}).')
         else:
             if okay.main(f'\nCreate "{os_path}" for {key}?', 'y'):
@@ -117,8 +120,8 @@ def main():
 
     if init_complete:
         cprint.plain('\nfiletailor initialization complete. Be sure to use Git, '
-                     + 'Syncthing, etc. to sync the `sync_dir` and `yaml` '
-                     + 'directories between your devices.')
+                     + 'Syncthing, etc. to sync the `sync_dir` directory and '
+                     + '`filetailor.yaml` between your devices.')
     else:
         cprint.error('\nfiletailor initialization NOT complete, run ' +
                      '"filetailor init" again.')
