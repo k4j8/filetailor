@@ -88,7 +88,7 @@ def main():
     cprint.plain('Creating filetailor directories...')
     init_complete = True
 
-    # Check folders exist
+    # Check directories exist
     for key in ['sync_dir', 'yaml', 'in-progress_dir']:
 
         if key not in paths:
@@ -99,7 +99,7 @@ def main():
         # Convert to Path type
         os_path = Path(paths[key])
 
-        # Check if folder exists, otherwise create path
+        # Check if directory exists, otherwise create path
         if (
                (key in ['sync_dir', 'in-progress_dir'] and os.path.isdir(os_path))
             or (key == 'yaml'                          and os.path.isfile(os_path))

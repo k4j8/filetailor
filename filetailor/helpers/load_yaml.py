@@ -40,15 +40,15 @@ def main(paths):
     logging.debug('Running load_yaml')
 
     # Check directories exist
-    folders_found = True
+    dirs_found = True
     expected_keys = ('yaml', 'sync_dir', 'in-progress_dir')
     for expected_key in expected_keys:
         if expected_key not in paths.keys():
             filetailor_ini_path = find_filetailor_ini()
             cprint.error(f'"{expected_key}" not found in '
                          + f'"{filetailor_ini_path}".')
-            folders_found = False
-    if not folders_found:
+            dirs_found = False
+    if not dirs_found:
         cprint.plain('Exiting...')
         sys.exit()
 

@@ -130,7 +130,7 @@ def prep_yaml():
             filetailor_ini_path)
         paths = filetailor_ini['PATHS']
 
-        # Check folders exist
+        # Check directories exist
         for key in paths:
 
             if key not in ['sync_dir', 'yaml', 'in-progress_dir']:
@@ -139,7 +139,7 @@ def prep_yaml():
             # Convert to Path type
             os_path = Path(paths[key])
 
-            # Check if folder exists
+            # Check if directory exists
             if not os.path.exists(os_path):
                 print(f'ERROR: "{os_path}" does not exist ({key}). '
                       + 'Run "filetailor init" to create.')
@@ -167,7 +167,7 @@ def call_init():
 
 
 def call_sync_status():
-    """Display status of local files in comparison to the sync folder"""
+    """Display status of local files in comparison to the sync directory"""
     logging.debug('Calling sync:status')
     ftconfig.sync = 'status'
     prep_yaml()
@@ -224,7 +224,7 @@ def main():
     defined by the user arguments
     """
 
-    # Get path to data folder
+    # Get path to data directory
     ftconfig.data = os.path.join(os.path.dirname(__file__), 'data')
 
     # Load config.ini
@@ -248,28 +248,28 @@ def main():
     # Parser: init
     parser_init = subparsers.add_parser(
         'init',
-        help='initialize new folders for sync')
+        help='initialize new directories for sync')
     parser_init = update_parser_all(parser_init, config_ini)
     parser_init.set_defaults(func=call_init)
 
     # Parser: status
     parser_sync_status = subparsers.add_parser(
         'status',
-        help='display status of local files in comparison to the sync folder')
+        help='display status of local files in comparison to the sync directory')
     parser_sync_status = update_parser_sync(parser_sync_status, config_ini)
     parser_sync_status.set_defaults(func=call_sync_status)
 
     # Parser: backup
     parser_sync_backup = subparsers.add_parser(
         'backup',
-        help='copy files from local device to sync folder')
+        help='copy files from local device to sync directory')
     parser_sync_backup = update_parser_sync(parser_sync_backup, config_ini)
     parser_sync_backup.set_defaults(func=call_sync_backup)
 
     # Parser: restore
     parser_sync_restore = subparsers.add_parser(
         'restore',
-        help='copy files from sync folder to local device')
+        help='copy files from sync directory to local device')
     parser_sync_restore.add_argument('--no-backup', action='store_true')
     parser_sync_restore = update_parser_sync_restore(parser_sync_restore, config_ini)
     parser_sync_restore.set_defaults(func=call_sync_restore)
@@ -300,7 +300,7 @@ def main():
     # Parser: clean
     parser_clean = subparsers.add_parser(
         'clean',
-        help='permanently delete files not in YAML from sync folder')
+        help='permanently delete files from sync directory not in YAML')
     parser_clean = update_parser_all(parser_clean, config_ini)
     parser_clean.add_argument('--dry-run', action='store_true',
                              help='do not modify any files')

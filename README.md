@@ -2,7 +2,7 @@
 
 **Update:** I have since discovered [Chezmoi](https://www.chezmoi.io/), which has many of the same features as filetailor and is much more mature. I recommend using Chezmoi instead. However, Chezmoi does rely on templates, unlike filetailor.
 
-filetailor is a peer-based configuration management utility for plain-text files (and directories) such as dotfiles. Files are backed up to a specified folder using filetailor, copied to another device using tools such as [Nextcloud](https://nextcloud.com/), [Syncthing](https://syncthing.net/), or [Git](https://git-scm.com/), and then copied to other devices using filetailor again. No symbolic links are used in the process.
+filetailor is a peer-based configuration management utility for plain-text files (and directories) such as dotfiles. Files are backed up to a specified directory using filetailor, copied to another device using tools such as [Nextcloud](https://nextcloud.com/), [Syncthing](https://syncthing.net/), or [Git](https://git-scm.com/), and then copied to other devices using filetailor again. No symbolic links are used in the process.
 
 During the backup and restore process, filetailor can modify the file contents and path for the specific device according to variables and line-specific controls defined in YAML _without_ the use of templates. See [list of features](https://github.com/k4j8/filetailor/wiki/Features).
 
@@ -40,7 +40,7 @@ alias MYHOME='/home/dev1home/' #{filetailor device1}
 [user@device1 ~]$ filetailor backup
 ```
 
-During backup from "device1" to the sync folder, the first line gets commented out because the tag matches the device name. Sync the sync folder with the backed-up version of the file using your preferred method of choice to "device2" then restore with filetailor. During restore on "device2", the second line gets uncommented (again, because the tag matches the device name).
+During backup from "device1" to the sync directory, the first line gets commented out because the tag matches the device name. Sync the sync directory with the backed-up version of the file using your preferred method of choice to "device2" then restore with filetailor. During restore on "device2", the second line gets uncommented (again, because the tag matches the device name).
 ```bash
 [user@device2 ~]$ filetailor restore
 ```
@@ -67,7 +67,7 @@ $ filetailor init
 # Accept confirmations to create directories
 ```
 
-To sync filetailor between devices, sync the `sync_dir` and `yaml_dir` folders created in the above steps using Git, Syncthing, etc.
+To sync filetailor between devices, sync the `sync_dir` and `yaml_dir` directories created in the above steps using Git, Syncthing, etc.
 
 See [Alternative Installs](https://github.com/k4j8/filetailor/wiki/Alternative-Installs) for other installation methods.
 
@@ -81,9 +81,9 @@ The YAML also defines variables, which are strings to replace when restoring to 
 
 ### Usage
 
-To backup all files defined in the YAML from the local device to the sync folder, run `filetailor backup`. Lines/blocks matching the device name will be commented out as they are copied to the sync folder.
+To backup all files defined in the YAML from the local device to the sync directory, run `filetailor backup`. Lines/blocks matching the device name will be commented out as they are copied to the sync directory.
 
-To restore all files defined in the YAML from the sync folder to the local device, run `filetailor restore`. Lines/blocks matching the device name will be uncommented as they are copied to the local device.
+To restore all files defined in the YAML from the sync directory to the local device, run `filetailor restore`. Lines/blocks matching the device name will be uncommented as they are copied to the local device.
 
 To list all available commands, run `filetailor --help`. For command details, run `filetailor COMMAND --help`.
 
@@ -111,7 +111,7 @@ After backing up the file through filetailor and then restoring to "laptop1" or 
 export $device_type="laptop" #{filetailor laptop1 laptop2}
 ```
 
-How the code would look on any other device and in the filetailor sync folder:
+How the code would look on any other device and in the filetailor sync directory:
 ```bash
 # export $device_type="desktop" #{filetailor desktop}
 # export $device_type="laptop" #{filetailor laptop1 laptop2}

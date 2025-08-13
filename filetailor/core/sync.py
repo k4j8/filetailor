@@ -486,7 +486,7 @@ def get_file_status(cfile, cdevice):
 
         if not cfile.target.exists() and not cfile.target_parent.is_dir():
             # Target nor its parent exist, so offer to create parent dir
-            cprint.plain(f'For "{cfile.file_id}", local file\'s parent folder '
+            cprint.plain(f'For "{cfile.file_id}", local file\'s parent directory '
                          + f'"{cfile.target_parent}" does not exist.')
             if not create_dir(cfile.target_parent, cfile):
                 return SKIP

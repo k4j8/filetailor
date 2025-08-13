@@ -48,23 +48,23 @@ def main():
     """Remove files from sync_dir that are no longer defined in YAML"""
     paths = ftconfig.paths
 
-    cprint.plain('Searching for files in sync folder not listed in YAML...')
+    cprint.plain('Searching for files in sync directory not listed in YAML...')
     sync_files = os.listdir(paths['sync_dir'])
     yaml_files = ftconfig.yaml_files
     orphans_found = False
     for sync_file in sync_files:
         if not file_in_yaml(sync_file, yaml_files):
             orphans_found = True
-            if okay.main(f'\nOkay to delete "{sync_file}" from sync folder '
+            if okay.main(f'\nOkay to delete "{sync_file}" from sync directory '
                          + '(no longer tracked in YAML)?', 'y'):
                 sync_file_path = os.path.join(paths['sync_dir'], sync_file)
                 try:
                     if not get_option('dry_run'):
                         shutil.rmtree(sync_file_path)
-                    cprint.success(f'Deleted "{sync_file}" from sync folder.')
+                    cprint.success(f'Deleted "{sync_file}" from sync directory.')
                 except NotADirectoryError:
                     os.remove(sync_file_path)
-                    cprint.success(f'Deleted "{sync_file}" from sync folder.')
+                    cprint.success(f'Deleted "{sync_file}" from sync directory.')
     if orphans_found:
         cprint.plain('\nClean complete.\n')
     else:

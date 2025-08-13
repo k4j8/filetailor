@@ -109,7 +109,7 @@ def update_comments(line, comment_char, indent):
 
 
 def main(xfile):
-    """Tailor the line to fit the sync folder (backup) or device (restore)
+    """Tailor the line to fit the sync directory (backup) or device (restore)
 
     Called by `tailor_file`
     """
