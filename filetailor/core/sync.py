@@ -305,7 +305,7 @@ def copy_subfiles(cfile, subfiles_list, verb):
                     # Copy/delete each file without asking
                     if not get_option('dry_run', cfile, cfile.device):
                         copy_files(subfile, delete)
-                elif okay.main(f'\n{verb} "{file_id}"?', 'd',
+                elif okay.main(f'{verb} "{file_id}"?', 'd',
                                obj1=cfile, obj2=cfile.device,
                                src=subfile.source, dst=subfile.target):
                     # Asked to copy/delete file, answer was yes
@@ -329,7 +329,10 @@ def tailor_file(xfile):
 
     # Write source_tailored to a file (in_progress_file)
     with open(xfile.in_progress, 'w', encoding='UTF-8') as in_progress_file:
-        in_progress_file.writelines(source_tailored)
+        if source_tailored:
+            in_progress_file.writelines(source_tailored)
+        else:
+            in_progress_file = xfile
 
     # Compare files
     if (xfile.target.is_file()

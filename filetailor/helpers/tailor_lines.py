@@ -3,6 +3,7 @@
 specific device based on the YAML
 """
 
+import logging
 import re
 import sys
 
@@ -116,11 +117,9 @@ def main(xfile):
     with open(xfile.source) as source_file:
         try:
             source_text = source_file.readlines()
-        except UnicodeDecodeError:
-            cprint.error(f'ERROR: "{xfile.file_id}" is not readable. Please '
-                         + 'exclude file in YAML.', xfile)
-            input('Press return to exit.')
-            sys.exit()
+        except (UnboundLocalError, UnicodeDecodeError):
+            logging.debug('Ignoring binary file {xfile.file_id}')
+            return False
 
 
     source_tailored = []
