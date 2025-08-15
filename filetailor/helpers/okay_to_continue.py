@@ -17,13 +17,13 @@ def get_response(msg, default, obj1=None, obj2=None):
     # Determine the options
     valid_input = ['a', 'y', 'n']
     if default == 'a':
-        flags = '[A]ll, [Y]es, [N]o'
+        flags = '[A]ll, [y]es, [n]o'
     elif default == 'y':
         flags = '[Y/n]'
     elif default == 'n':
         flags = '[y/N]'
     elif default == 'd':
-        flags = '[Y]es, [N]o, show [D]ifftool'
+        flags = '[y]es, [n]o, show [D]ifftool'
         valid_input.append('d')
 
     result = None
