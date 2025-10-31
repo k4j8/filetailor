@@ -376,6 +376,7 @@ def diff_dir(cfile):
     """
 
     # Ignore subdirectories
+    # os.walk returns root, dirs, files, so os.walk(cfile.source))[1] returns all dirs
     ignores = next(os.walk(cfile.source))[1]
     try:
         if ftconfig.sync in [STATUS, RESTORE]:
