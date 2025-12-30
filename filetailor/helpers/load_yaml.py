@@ -66,13 +66,15 @@ def main(paths):
             if key_type == 'default':
                 # default
                 yaml_default = data['default']
+            elif key_type == 'device':
+                # Device
+                yaml_devices[key_value] = data[key]
+            elif key_type == 'file':
+                # File
+                yaml_files[key_value] = data[key]
             else:
-                if key_type == 'device':
-                    # Device
-                    yaml_devices[key_value] = data[key]
-                elif key_type == 'file':
-                    # File
-                    yaml_files[key_value] = data[key]
+                cprint.error(f'ERROR: Invalid key name.')
+                sys.exit()
 
     logging.debug('')
     logging.debug('yaml_default = %s', yaml_default)
