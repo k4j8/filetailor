@@ -8,8 +8,8 @@ import logging
 import os
 import platform
 import sys
+from importlib.metadata import version
 from pathlib import Path
-import pkg_resources
 
 import filetailor.config as ftconfig
 import filetailor.core.clean
@@ -20,8 +20,6 @@ import filetailor.core.uninstall
 import filetailor.core.update_yaml
 import filetailor.helpers.load_yaml
 from filetailor.helpers import load_ini_files
-
-__version__ = pkg_resources.require('filetailor')[0].version
 
 
 def get_hostname():
@@ -239,7 +237,7 @@ def main():
                      ' level of file content control.'))
     parser = update_parser_all(parser, config_ini)
     parser.add_argument('--version', action='version',
-                        version=f'%(prog)s {__version__}')
+                        version=f'%(prog)s {version('filetailor')}')
     subparsers = parser.add_subparsers(
         help='commands executing various aspects of filetailor')
 
