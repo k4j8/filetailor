@@ -1,8 +1,10 @@
 # filetailor
 
-**Update:** I have since discovered [Chezmoi](https://www.chezmoi.io/), which has many of the same features as filetailor and is much more mature. I recommend using Chezmoi instead. However, Chezmoi does rely on templates, unlike filetailor.
+**Update:** Below are two similar programs to filetailor that are much more mature. I recommend using one of them instead. Although personally, I am still using filetailor to manage my files.
+- [Chezmoi](https://www.chezmoi.io/): Supports sync without symbolic links but requires templates.
+- [Yolk](https://elkowar.github.io/yolk/): Supports sync without templates but requires symbolic links.
 
-filetailor is a peer-based configuration management utility for plain-text files (and directories) such as dotfiles. Files are backed up to a specified directory using filetailor, copied to another device using tools such as [Nextcloud](https://nextcloud.com/), [Syncthing](https://syncthing.net/), or [Git](https://git-scm.com/), and then copied to other devices using filetailor again. No symbolic links are used in the process.
+filetailor is a peer-based configuration management utility for plain-text files (and directories) such as dotfiles without using symbolic links or templates. Files are backed up to a specified directory using filetailor, copied to another device using tools such as [Nextcloud](https://nextcloud.com/), [Syncthing](https://syncthing.net/), or [Git](https://git-scm.com/), and then copied to other devices using filetailor again.
 
 During the backup and restore process, filetailor can modify the file contents and path for the specific device according to variables and line-specific controls defined in YAML _without_ the use of templates. See [list of features](https://github.com/k4j8/filetailor/wiki/Features).
 
