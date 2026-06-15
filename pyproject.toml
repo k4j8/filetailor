@@ -18,7 +18,7 @@ authors = [
 description = "Copy and modify plain text files to a directory based on YAML to be synced between devices"
 readme = "README.md"
 license = "GPL-3.0-only"
-license-files = ["LICENCSE"]
+license-files = ["LICENSE"]
 classifiers = [
     "Natural Language :: English",
     "Operating System :: OS Independent",
